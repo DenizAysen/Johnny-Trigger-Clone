@@ -1,5 +1,6 @@
 public enum State
 {
     Idle,
-    Run
+    Run,
+    Warzone
 }

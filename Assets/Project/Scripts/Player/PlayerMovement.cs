@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerAnimator playerAnimator;
 
     private State _state;
+    private Warzone _currentWarzone;
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -34,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
             case State.Run:
                 Move();
                 break;
+
+            case State.Warzone:
+                break;
         }
     }
     private void StartRunning()
@@ -44,5 +48,12 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         transform.position += Vector3.right * moveSpeed * Time.deltaTime;
+    }
+    public void OnEnteredWarzone(Warzone warzone)
+    {
+        if (!_currentWarzone != null)
+            return;
+
+        _currentWarzone = warzone;
     }
 }
