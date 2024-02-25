@@ -1,18 +1,16 @@
+using Dreamteck.Splines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Warzone : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private SplineComputer newPlayerSpline;
+    [SerializeField] private float duration;
+    [SerializeField] private float animatorSpeed;
+    [SerializeField] private string animationToPlay;
+    public SplineComputer GetPlayerSpline() => newPlayerSpline;
+    public float GetDuration() => duration;
+    public float GetAnimatorSpeed() => animatorSpeed;
+    public string GetAnimationToPlay() => animationToPlay;
 }

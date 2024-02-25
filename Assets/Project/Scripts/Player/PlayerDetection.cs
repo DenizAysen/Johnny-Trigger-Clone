@@ -25,7 +25,7 @@ public class PlayerDetection : MonoBehaviour
         {
             if (col.CompareTag(_warzoneEnter))
             {
-                Debug.Log(col.name);
+                //Debug.Log(col.name);
                 OnEnteredWarzone(col);
             }
         }
