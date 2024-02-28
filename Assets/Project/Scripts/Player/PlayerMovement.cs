@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float slowMoScale;
     [SerializeField] private PlayerAnimator playerAnimator;
+    [SerializeField] private PlayerIK playerIK;
 
     private State _state;
     private Warzone _currentWarzone;
@@ -63,10 +64,14 @@ public class PlayerMovement : MonoBehaviour
 
         _currentWarzone = warzone;
 
+        _currentWarzone.StartAnimatingIKtarget();
+
         _warzoneTimer = 0;
         _splinePercent = 0;
 
         playerAnimator.Play(_currentWarzone.GetAnimationToPlay(),_currentWarzone.GetAnimatorSpeed());
+
+        playerIK.ConfigureIK(_currentWarzone.GetIKTarget());
 
         Time.timeScale = slowMoScale;
     }
@@ -87,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         _state = State.Run;
         _currentWarzone = null;
         playerAnimator.Play(_run, 1f);
+        playerIK.DisableIK();
         Time.timeScale = 1f;
     }
 }
