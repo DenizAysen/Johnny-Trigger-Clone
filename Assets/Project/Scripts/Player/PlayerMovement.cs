@@ -14,8 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private Warzone _currentWarzone;
     private float _warzoneTimer;
     private float _splinePercent;
-
     private const string _run = "Run";
+
+    public static Action onEnteredWarzone;
+    public static Action onExitedWarzone;
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -55,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position += Vector3.right * moveSpeed * Time.deltaTime;
     }
-    public void OnEnteredWarzone(Warzone warzone)
+    public void EnterWarzone(Warzone warzone)
     {
         if (_currentWarzone != null)
             return;
@@ -74,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         playerIK.ConfigureIK(_currentWarzone.GetIKTarget());
 
         Time.timeScale = slowMoScale;
+
+        onEnteredWarzone?.Invoke();
     }
     private void ManageWarzoneState()
     {
@@ -94,5 +98,6 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.Play(_run, 1f);
         playerIK.DisableIK();
         Time.timeScale = 1f;
+        onExitedWarzone?.Invoke();
     }
 }

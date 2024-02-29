@@ -33,6 +33,6 @@ public class PlayerDetection : MonoBehaviour
     private void OnEnteredWarzone(Collider warzoneCollider)
     {
         Warzone warzone = warzoneCollider.GetComponentInParent<Warzone>();
-        _playerMovement.OnEnteredWarzone(warzone);
+        _playerMovement.EnterWarzone(warzone);
     }
 }
