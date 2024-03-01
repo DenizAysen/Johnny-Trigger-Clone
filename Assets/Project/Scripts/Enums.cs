@@ -4,3 +4,8 @@ public enum State
     Run,
     Warzone
 }
+public enum EnemyState
+{
+    Alive,
+    Dead
+}

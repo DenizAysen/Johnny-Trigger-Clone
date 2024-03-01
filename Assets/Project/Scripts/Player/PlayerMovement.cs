@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         playerIK.ConfigureIK(_currentWarzone.GetIKTarget());
 
         Time.timeScale = slowMoScale;
+        Time.fixedDeltaTime = slowMoScale / 50;
 
         onEnteredWarzone?.Invoke();
     }
@@ -98,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.Play(_run, 1f);
         playerIK.DisableIK();
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = 1f / 50f;
         onExitedWarzone?.Invoke();
     }
 }

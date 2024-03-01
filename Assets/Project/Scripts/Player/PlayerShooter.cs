@@ -6,8 +6,10 @@ using UnityEngine;
 public class PlayerShooter : MonoBehaviour
 {
     [SerializeField] private GameObject shootingLine;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform buletSpawnPosition;
+    [SerializeField] private Bullet bulletPrefab;
+    [SerializeField] private Transform bulletSpawnPosition;
+    [SerializeField] private Transform bulletsParent;
+    [SerializeField] private float bulletSpeed;
 
     private bool _canShoot;
     private void OnEnable()
@@ -51,7 +53,13 @@ public class PlayerShooter : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(bulletPrefab,buletSpawnPosition.position,Quaternion.identity);
+        Vector3 direction = bulletSpawnPosition.right;
+        direction.z = 0f;
+
+        Bullet bulletInstance = Instantiate(bulletPrefab,bulletSpawnPosition.position,Quaternion.identity,bulletsParent);
+
+        bulletInstance.Configure(direction * bulletSpeed);
+
     }
 
     private void SetShootingLineVisibility(bool visibility)
