@@ -16,6 +16,7 @@ public class PlayerShooter : MonoBehaviour
     {
         PlayerMovement.onEnteredWarzone += OnEnteredWarzone;
         PlayerMovement.onExitedWarzone += OnExitedWarzone;
+        PlayerMovement.onDied += OnDied;
     }
     private void OnEnteredWarzone()
     {
@@ -27,8 +28,7 @@ public class PlayerShooter : MonoBehaviour
         SetShootingLineVisibility(false);
         _canShoot = false;
     }
-
-    void Start()
+    private void OnDied()
     {
         SetShootingLineVisibility(false);
     }
@@ -36,6 +36,11 @@ public class PlayerShooter : MonoBehaviour
     {
         PlayerMovement.onEnteredWarzone -= OnEnteredWarzone;
         PlayerMovement.onExitedWarzone -= OnExitedWarzone;
+        PlayerMovement.onDied += OnDied;
+    }
+    void Start()
+    {
+        SetShootingLineVisibility(false);
     }
     // Update is called once per frame
     void Update()

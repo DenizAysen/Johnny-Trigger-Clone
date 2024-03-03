@@ -2,7 +2,8 @@ public enum State
 {
     Idle,
     Run,
-    Warzone
+    Warzone,
+    Dead
 }
 public enum EnemyState
 {

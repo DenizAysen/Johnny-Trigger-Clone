@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private CharacterRagdoll characterRagdoll;
     [SerializeField] private CharacterIK characterIK;
+    [SerializeField] private EnemyShooter enemyShooter;
     private PlayerMovement _playerMovement;
     void Start()
     {
@@ -39,6 +40,9 @@ public class Enemy : MonoBehaviour
     }
     public void ShootAtPlayer()
     {
-        Debug.Log("Shooting at player");
+        if (_enemyState == EnemyState.Dead)
+            return;
+
+        enemyShooter.TryShooting();
     }
 }

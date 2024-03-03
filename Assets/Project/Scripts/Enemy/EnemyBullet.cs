@@ -1,23 +1,22 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     private Vector3 _velocity;
 
-    [SerializeField] private LayerMask enemyLayerMask;
+    [SerializeField] private LayerMask playerMask;
     [SerializeField] private float detectionRadius;
     void Start()
     {
-        Destroy(gameObject,3f);
+        
     }
     void Update()
     {
         Move();
 
-        CheckForEnemies();
+        CheckForPlayer();
     }
     private void Move()
     {
@@ -27,11 +26,11 @@ public class Bullet : MonoBehaviour
     {
         _velocity = velocity;
     }
-    public void CheckForEnemies()
+    public void CheckForPlayer()
     {
-        Collider[] detectedEnemies = Physics.OverlapSphere(transform.position, detectionRadius,enemyLayerMask);
+        Collider[] detectedPlayer = Physics.OverlapSphere(transform.position, detectionRadius, playerMask);
 
-        foreach (Collider enemyCol in detectedEnemies)
-            enemyCol.GetComponent<Enemy>().TakeDamage();
+        foreach (Collider playerCol in detectedPlayer)
+            playerCol.GetComponent<PlayerMovement>().TakeDamage();
     }
 }

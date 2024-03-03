@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float slowMoScale;
     [SerializeField] private PlayerAnimator playerAnimator;
     [SerializeField] private CharacterIK playerIK;
+    [SerializeField] private CharacterRagdoll characterRagdoll;
     [SerializeField] private Transform enemyTarget;
     #endregion
 
@@ -23,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region Actions
     public static Action onEnteredWarzone;
-    public static Action onExitedWarzone; 
+    public static Action onExitedWarzone;
+    public static Action onDied;
     #endregion
     void Start()
     {
@@ -110,4 +112,13 @@ public class PlayerMovement : MonoBehaviour
         onExitedWarzone?.Invoke();
     }
     public Transform GetEnemyTarget() => enemyTarget;
+    public void TakeDamage() 
+    {
+        _state = State.Dead;
+
+        characterRagdoll.Ragdollify();
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 1f / 50f;
+        onDied?.Invoke();
+    }
 }

@@ -15,12 +15,6 @@ public class CharacterRagdoll : MonoBehaviour
             rb.isKinematic = true;
         }   
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void Ragdollify()
     {
         foreach (Rigidbody rb in rigidbodies)
