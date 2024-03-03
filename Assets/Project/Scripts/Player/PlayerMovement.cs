@@ -5,19 +5,26 @@ using Dreamteck.Splines;
 using System;
 public class PlayerMovement : MonoBehaviour
 {
+    #region Serialized Fields
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float slowMoScale;
     [SerializeField] private PlayerAnimator playerAnimator;
-    [SerializeField] private PlayerIK playerIK;
+    [SerializeField] private CharacterIK playerIK;
+    [SerializeField] private Transform enemyTarget;
+    #endregion
 
+    #region Privates
     private State _state;
     private Warzone _currentWarzone;
     private float _warzoneTimer;
     private float _splinePercent;
     private const string _run = "Run";
+    #endregion
 
+    #region Actions
     public static Action onEnteredWarzone;
-    public static Action onExitedWarzone;
+    public static Action onExitedWarzone; 
+    #endregion
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -102,4 +109,5 @@ public class PlayerMovement : MonoBehaviour
         Time.fixedDeltaTime = 1f / 50f;
         onExitedWarzone?.Invoke();
     }
+    public Transform GetEnemyTarget() => enemyTarget;
 }

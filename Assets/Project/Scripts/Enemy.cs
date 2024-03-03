@@ -8,9 +8,14 @@ public class Enemy : MonoBehaviour
     private EnemyState _enemyState;
 
     [SerializeField] private CharacterRagdoll characterRagdoll;
+    [SerializeField] private CharacterIK characterIK;
+    private PlayerMovement _playerMovement;
     void Start()
     {
         _enemyState = EnemyState.Alive;
+
+        _playerMovement = FindObjectOfType<PlayerMovement>();
+        characterIK.ConfigureIK(_playerMovement.GetEnemyTarget());
     }
 
     // Update is called once per frame
@@ -31,5 +36,9 @@ public class Enemy : MonoBehaviour
         _enemyState = EnemyState.Dead;
 
         characterRagdoll.Ragdollify();
+    }
+    public void ShootAtPlayer()
+    {
+        Debug.Log("Shooting at player");
     }
 }
