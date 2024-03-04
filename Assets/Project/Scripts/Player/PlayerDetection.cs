@@ -8,6 +8,7 @@ public class PlayerDetection : MonoBehaviour
     [SerializeField] private float detectionRadius;
 
     private const string _warzoneEnter = "WarzoneEnter";
+    private const string _finish = "Finish";
     private PlayerMovement _playerMovement;
     private void Awake()
     {
@@ -15,6 +16,9 @@ public class PlayerDetection : MonoBehaviour
     }
     private void Update()
     {
+        if (!GameManager.Instance.IsGameState())
+            return;
+
         DetectStuff();
     }
     private void DetectStuff()
@@ -28,11 +32,19 @@ public class PlayerDetection : MonoBehaviour
                 //Debug.Log(col.name);
                 OnEnteredWarzone(col);
             }
+            else if (col.CompareTag(_finish))
+            {
+                HitFinishLine();
+            }
         }
     }
     private void OnEnteredWarzone(Collider warzoneCollider)
     {
         Warzone warzone = warzoneCollider.GetComponentInParent<Warzone>();
         _playerMovement.EnterWarzone(warzone);
+    }
+    private void HitFinishLine()
+    {
+        _playerMovement.HitFinishLine();
     }
 }

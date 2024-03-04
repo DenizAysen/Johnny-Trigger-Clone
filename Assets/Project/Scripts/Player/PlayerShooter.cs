@@ -31,6 +31,7 @@ public class PlayerShooter : MonoBehaviour
     private void OnDied()
     {
         SetShootingLineVisibility(false);
+        _canShoot= false;
     }
     private void OnDestroy()
     {

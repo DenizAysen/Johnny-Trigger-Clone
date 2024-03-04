@@ -1,4 +1,4 @@
-public enum State
+public enum PlayerState
 {
     Idle,
     Run,
@@ -9,4 +9,11 @@ public enum EnemyState
 {
     Alive,
     Dead
+}
+public enum GameState
+{
+    PreGame,
+    Game,
+    LevelComplete,
+    GameOver
 }

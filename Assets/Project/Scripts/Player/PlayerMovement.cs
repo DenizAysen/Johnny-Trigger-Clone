@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Privates
-    private State _state;
+    private PlayerState _state;
     private Warzone _currentWarzone;
     private float _warzoneTimer;
     private float _splinePercent;
@@ -27,39 +27,65 @@ public class PlayerMovement : MonoBehaviour
     public static Action onExitedWarzone;
     public static Action onDied;
     #endregion
+    private void OnEnable()
+    {
+        GameManager.onGameStateChanged += OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.PreGame:
+
+                break;
+
+            case GameState.Game:
+                StartRunning();
+                break;
+        }
+    }
+    private void OnDestroy()
+    {
+        GameManager.onGameStateChanged -= OnGameStateChanged;
+    }
+
     void Start()
     {
         Application.targetFrameRate = 60;
 
-        _state = State.Idle;
+        _state = PlayerState.Idle;
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartRunning();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    StartRunning();
+        //}
+        if (!GameManager.Instance.IsGameState())
+            return;
+
         ManageState();
     }
     private void ManageState()
     {
         switch (_state)
         {
-            case State.Idle:
+            case PlayerState.Idle:
                 break;
 
-            case State.Run:
+            case PlayerState.Run:
                 Move();
                 break;
 
-            case State.Warzone:
+            case PlayerState.Warzone:
                 ManageWarzoneState();
                 break;
         }
     }
     private void StartRunning()
     {
-        _state = State.Run;
+        _state = PlayerState.Run;
         playerAnimator.PlayRunAnimation();
     }
     private void Move()
@@ -71,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         if (_currentWarzone != null)
             return;
         Debug.Log("Entered Warzone");
-        _state = State.Warzone;
+        _state = PlayerState.Warzone;
 
         _currentWarzone = warzone;
 
@@ -103,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ExitWarzone()
     {
-        _state = State.Run;
+        _state = PlayerState.Run;
         _currentWarzone = null;
         playerAnimator.Play(_run, 1f);
         playerIK.DisableIK();
@@ -114,11 +140,19 @@ public class PlayerMovement : MonoBehaviour
     public Transform GetEnemyTarget() => enemyTarget;
     public void TakeDamage() 
     {
-        _state = State.Dead;
+        _state = PlayerState.Dead;
 
         characterRagdoll.Ragdollify();
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 1f / 50f;
         onDied?.Invoke();
+        GameManager.onGameStateChanged?.Invoke(GameState.GameOver);
+    }
+    public void HitFinishLine()
+    {
+        _state = PlayerState.Idle;
+        playerAnimator.PlayIdleAnimation();
+
+        GameManager.Instance.SetGameState(GameState.LevelComplete);
     }
 }
