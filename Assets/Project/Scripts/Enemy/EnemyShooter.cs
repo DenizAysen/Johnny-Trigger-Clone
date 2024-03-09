@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyShooter : MonoBehaviour
 {
     [SerializeField] private EnemyBullet bulletPrefab;
@@ -10,6 +11,11 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] private float bulletSpeed;
 
     private bool _hasShot;
+    private Enemy _enemy;
+    private void Awake()
+    {
+        _enemy = GetComponent<Enemy>();
+    }
     void Start()
     {
         
@@ -31,6 +37,9 @@ public class EnemyShooter : MonoBehaviour
     }
     private void Shoot()
     {
+        if(_enemy.IsDead())
+            return;
+
         Vector3 velocity = bulletSpeed * bulletSpawnPoint.right;
 
         EnemyBullet bullet = Instantiate(bulletPrefab,bulletSpawnPoint.position,Quaternion.identity,bulletsParent);

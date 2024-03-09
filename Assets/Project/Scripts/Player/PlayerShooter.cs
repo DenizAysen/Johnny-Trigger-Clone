@@ -54,7 +54,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void ManageShooting()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && UIBulletsContainer.Instance.CanShoot())
             Shoot();
     }
 

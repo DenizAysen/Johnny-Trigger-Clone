@@ -45,4 +45,5 @@ public class Enemy : MonoBehaviour
 
         enemyShooter.TryShooting();
     }
+    public bool IsDead() => _enemyState == EnemyState.Dead;
 }
