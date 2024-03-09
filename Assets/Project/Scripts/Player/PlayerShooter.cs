@@ -12,6 +12,7 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private float bulletSpeed;
 
     private bool _canShoot;
+    public static Action onShot;
     private void OnEnable()
     {
         PlayerMovement.onEnteredWarzone += OnEnteredWarzone;
@@ -66,6 +67,7 @@ public class PlayerShooter : MonoBehaviour
 
         bulletInstance.Configure(direction * bulletSpeed);
 
+        onShot?.Invoke();
     }
 
     private void SetShootingLineVisibility(bool visibility)
