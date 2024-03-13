@@ -38,7 +38,7 @@ public class PlayerShooter : MonoBehaviour
     {
         PlayerMovement.onEnteredWarzone -= OnEnteredWarzone;
         PlayerMovement.onExitedWarzone -= OnExitedWarzone;
-        PlayerMovement.onDied += OnDied;
+        PlayerMovement.onDied -= OnDied;
     }
     void Start()
     {

@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
         Application.targetFrameRate = 60;
 
         _state = PlayerState.Idle;
+
+        transform.position = CheckpointManager.Instance.GetCheckpointPosition();
     }
     void Update()
     {
