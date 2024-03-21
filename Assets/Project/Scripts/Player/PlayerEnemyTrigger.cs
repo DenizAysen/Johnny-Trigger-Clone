@@ -7,7 +7,7 @@ public class PlayerEnemyTrigger : MonoBehaviour
 {
     private bool _checkForShootingEnemies;
     //private Vector3 _rayOrigin, _rayDirection, _worldSpaceSecondPoint;
-    private float _maxDistance;
+    //private float _maxDistance;
     private List<Enemy> currentEnemies = new List<Enemy>();
     List<Enemy> enemiesToRemove = new List<Enemy>();
 
@@ -49,8 +49,8 @@ public class PlayerEnemyTrigger : MonoBehaviour
         Vector3 _rayOrigin = shootingLine.transform.TransformPoint(shootingLine.GetPosition(0));
         Vector3 _worldSpaceSecondPoint = shootingLine.transform.TransformPoint(shootingLine.GetPosition(1));
 
-        Vector3 _rayDirection = (_worldSpaceSecondPoint- _rayOrigin).normalized;
-        _maxDistance = Vector3.Distance(_rayOrigin, _worldSpaceSecondPoint);
+        Vector3 _rayDirection = (_worldSpaceSecondPoint - _rayOrigin).normalized;
+        float _maxDistance = Vector3.Distance(_rayOrigin, _worldSpaceSecondPoint);
 
         RaycastHit[] hits = Physics.RaycastAll(_rayOrigin, _rayDirection, _maxDistance, enemyLayerMask);
 
