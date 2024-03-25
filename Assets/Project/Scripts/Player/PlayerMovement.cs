@@ -98,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_currentWarzone != null)
             return;
+
         Debug.Log("Entered Warzone");
         _state = PlayerState.Warzone;
 
@@ -127,7 +128,20 @@ public class PlayerMovement : MonoBehaviour
         transform.position = _currentWarzone.GetPlayerSpline().EvaluatePosition(_splinePercent);
 
         if (_splinePercent >= 1f)
+            TryExitWarzone();
+    }
+    private void TryExitWarzone()
+    {
+        Warzone nextWarzone = _currentWarzone.GetNextWarzone();
+
+        if(nextWarzone == null)
             ExitWarzone();
+
+        else
+        {
+            _currentWarzone = null;
+            EnterWarzone(nextWarzone);
+        }
     }
     private void ExitWarzone()
     {
@@ -157,4 +171,5 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.Instance.SetGameState(GameState.LevelComplete);
     }
+    public Warzone GetCurrentWarzone() => _currentWarzone;
 }

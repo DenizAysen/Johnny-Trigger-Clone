@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerEnemyTrigger : MonoBehaviour
 {
+    private PlayerMovement _playerMovement;
     private bool _checkForShootingEnemies;
     //private Vector3 _rayOrigin, _rayDirection, _worldSpaceSecondPoint;
     //private float _maxDistance;
@@ -13,7 +15,10 @@ public class PlayerEnemyTrigger : MonoBehaviour
 
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private LineRenderer shootingLine;
-
+    private void Awake()
+    {
+        _playerMovement = GetComponent<PlayerMovement>();
+    }
     private void OnEnable()
     {
         PlayerMovement.onEnteredWarzone += OnEnteredWarzone;
@@ -79,7 +84,9 @@ public class PlayerEnemyTrigger : MonoBehaviour
 
             if (!enemyFound)
             {
-                enemy.ShootAtPlayer();
+                if(enemy.transform.parent == _playerMovement.GetCurrentWarzone().transform)
+                    enemy.ShootAtPlayer();
+
                 enemiesToRemove.Add(enemy);
             }
         }

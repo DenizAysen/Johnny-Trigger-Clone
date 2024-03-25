@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Warzone : MonoBehaviour
 {
+    #region Serialized Fields
     [SerializeField] private SplineComputer newPlayerSpline;
     [SerializeField] private SplineFollower ikSplineFollower;
     [SerializeField] private Transform ikTarget;
@@ -12,6 +13,9 @@ public class Warzone : MonoBehaviour
     [SerializeField] private float duration;
     [SerializeField] private float animatorSpeed;
     [SerializeField] private string animationToPlay;
+
+    [SerializeField] private Warzone nextWarzone; 
+    #endregion
     private void Start()
     {
         ikSplineFollower.followDuration = duration;
@@ -28,4 +32,5 @@ public class Warzone : MonoBehaviour
     {
         return ikTarget;
     }
+    public Warzone GetNextWarzone() => nextWarzone;
 }

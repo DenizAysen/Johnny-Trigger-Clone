@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float detectionRadius;
     void Start()
     {
-        Destroy(gameObject,3f);
+        Destroy(gameObject,1.5f);
     }
     void Update()
     {

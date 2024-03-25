@@ -6,12 +6,15 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] levels;
+    [SerializeField] private bool preventSpawning;
+
     private int _levelIndex;
     private void Awake()
     {
         LoadData();
 
-        SpawnLevel();
+        if(!preventSpawning)
+            SpawnLevel();
     }
     private void OnEnable()
     {
